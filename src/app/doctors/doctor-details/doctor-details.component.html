@@ -1,0 +1,47 @@
+<div class="clr-row">
+    <div class="clr-col-sm-6">
+      <img [src]="doctor.imagePath"
+                  alt="{{ doctor.name }}"
+                  class="img-responsive"
+                  style="height: 150px;">
+    </div>
+    <div class="clr-col-sm-6">
+      <h3> {{ doctor.name}}</h3>
+      <h3> {{ doctor.title}}</h3>
+      <h3> Category:
+        <span class="label label-info"
+        *ngFor="let category of doctor.category">
+        {{ category}} animal
+        </span>
+      </h3>
+    </div>
+  </div>
+  <div class="clr-row">
+      <div class="clr-col-sm-12">
+        <h3> Certifications:</h3>
+        <br>
+        <ul class="list-group">
+            <li class="list-group-item"
+                *ngFor="let description of doctor.descriptionArray">
+                {{ description }}
+            </li>
+        </ul>
+      </div>
+  </div>
+  <br>
+  <div class="clr-row" *ngIf="authService.isAdmin">
+    <div class="clr-col-sm-12">
+        <button
+        type="submit"
+        class="btn btn-primary-outline"
+        (click)="onEdit()"
+        > Edit
+        </button>
+        <button
+        type="button"
+        class="btn btn-danger-outline"
+        (click)="onDelete()"
+        > Delete </button>
+    </div>
+  </div>
+

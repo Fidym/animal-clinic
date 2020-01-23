@@ -1,0 +1,98 @@
+
+<div class="clr-row clr-justify-content-center">
+    <div class="clr-col clr-col-12 clr-col-md-8">
+  <form
+    class="clr-form clr-form-compact"
+    [formGroup]="doctorForm"
+    (ngSubmit)="onSubmit()"
+  >
+    <div class="clr-form-control clr-row">
+            <label for="name"class="clr-control-label clr-col-12 clr-col-md-2"> Name: </label>
+            <div class="clr-control-container clr-col-12 clr-col-md-10">
+                <div class="clr-input-wrapper">
+                  <input id="name" class="clr-input" type="text" formControlName="name" required />
+                </div>
+            </div>
+    </div>
+    <div class="clr-form-control clr-row">
+            <label for="title"class="clr-control-label clr-col-12 clr-col-md-2"> Title: </label>
+            <div class="clr-control-container clr-col-12 clr-col-md-10">
+                <div class="clr-input-wrapper">
+                  <input id="title" class="clr-input" type="text" formControlName="title" required />
+                </div>
+            </div>
+    </div>
+    <div formArrayName="category">
+      <div class="clr-form-control clr-row"   *ngFor="let category of getControlsCategory(); let i = index">
+            <label for="category" class="clr-control-label clr-col-12 clr-col-md-4">
+              Category ({{i+ 1}}):
+            </label>
+            <div class="clr-control-container clr-col-12 clr-col-md-6">
+                <div class="clr-select-wrapper">
+                  <select id="category" class="clr-select" formControlName="{{i}}" required>
+                      <option value="small"> small</option>
+                      <option value="large"> large</option>
+                      <option value="exotic">exotic</option>
+                      <option value="wildlife">wildlife</option>
+                  </select>
+                </div>
+            </div>
+            <div class="clr-col-12 clr-col-md-2">
+              <button
+              type="button"
+              class="btn btn-danger btn-sm btn-icon"
+              (click)="onXcategory(i)"
+              ><clr-icon shape="times"></clr-icon></button>
+            </div>
+      </div>
+    <button class="btn btn-link" type="button"
+      (click)="onAddCategory()"> Add new category </button>
+    </div>
+
+    <div class="clr-form-control clr-row">
+            <label  for="image"class="clr-control-label clr-col-12 clr-col-md-2"> Image URL: </label>
+            <div class="clr-control-container clr-col-12 clr-col-md-10">
+                <div class="clr-input-wrapper">
+                    <input id="image" class="clr-input" #imagePath type="text" formControlName="imagePath" />
+                </div>
+            </div>
+    </div>
+    <img [src]="imagePath.value" style="max-width: 400px" class="img-responsive">
+    <div formArrayName="description">
+        <div class="clr-form-control clr-row"   *ngFor="let description of getControlsDescription(); let i = index">
+              <label for="description" class="clr-control-label clr-col-12 clr-col-md-4">
+                Descripion ({{i + 1}}):
+              </label>
+              <div class="clr-control-container clr-col-12 clr-col-md-6">
+                  <div class="clr-input-wrapper">
+                    <input id="description" class="clr-input" formControlName="{{i}}" required>
+                  </div>
+              </div>
+              <div  class="clr-col-12 clr-col-md-2">
+                <button
+                type="button"
+                class="btn btn-danger btn-sm btn-icon"
+                (click)="onXdescription(i)"
+                ><clr-icon shape="times"></clr-icon></button>
+              </div>
+        </div>
+      <button class="btn btn-link" type="button"
+        (click)="onAddDescription()"> Add new description </button>
+    </div>
+    <br>
+    <br>
+    <button
+    type="submit"
+    class="btn btn-success-outline"
+    [disabled]="!doctorForm.valid"
+    >Save
+    </button>
+    <button
+    type="button"
+    class="btn btn-danger-outline"
+    (click)="onCancel()">
+     Cancel
+    </button>
+</form>
+  </div>
+</div>

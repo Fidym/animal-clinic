@@ -1,0 +1,37 @@
+
+ <div *ngIf="isLoading">
+  <span class="spinner spinner-inline">
+      Loading...
+  </span>
+  <span>
+      Loading...
+  </span>
+</div>
+<div *ngIf="!isLoading">
+  <div class="clr-row  clr-align-items-center">
+      <ng-container *ngFor="let pet of pets, let i = index">
+      <div class="clr-col-12
+                  clr-col-sm-6
+                  clr-col-lg-4"
+        *ngIf="userId == pet.userId || authService.isAdmin">
+        <app-pet-item
+        [pet]="pet"
+        [index]="i"
+        >
+      </app-pet-item>
+    </div>
+    </ng-container>
+    <div class="clr-col-sm-6 clr-col-md-4">
+      <button
+      class="btn btn-icon btn-success"
+      title="Add New"
+      style="height: 50px;
+      width: 50px"
+      (click)="onNewPet()"
+      >
+        <clr-icon shape="plus"></clr-icon>
+      </button>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,77 @@
+<div class="clr-row clr-justify-content-center">
+    <div class="clr-col clr-col-12 clr-col-md-6">
+        <form
+        class="clr-form clr-form-compact"
+        [formGroup]="bookingForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="clr-form-control clr-row">
+          <label for="pet" class="clr-control-label clr-col-12 clr-col-md-4">
+            Select your Pet:
+          </label>
+          <div class="clr-control-container clr-col-12 clr-col-md-6">
+              <div class="clr-select-wrapper">
+                <select  id="pet" class="clr-select" formControlName="petName" required
+                  (change)="selectedPet($event.target.value)">
+                      <option *ngFor="let pet of pets" value="{{pet.name}}"> {{pet.name}}</option>
+                  </select>
+              </div>
+          </div>
+        </div>
+        <br>
+        <div class="clr-form-control clr-row">
+          <label for="doctor" class="clr-control-label clr-col-12 clr-col-md-4">
+            Doctors for your pet:
+          </label>
+          <div class="clr-control-container clr-col-12 clr-col-md-6">
+              <div class="clr-select-wrapper">
+                <select   id="doctor" class="clr-select" formControlName="doctorName" required>
+                      <option *ngFor="let doctor of doctors" value="{{doctor.name}}"> {{doctor.name}}</option>
+                  </select>
+              </div>
+              <clr-control-helper> Select your pet first!. </clr-control-helper>
+          </div>
+        </div>
+        <br>
+        <mat-form-field class="clr-form-control example-full-width">
+          <input  formControlName="appointmentDate" id="date" matInput [matDatepickerFilter]="dateFilter" [matDatepicker]="picker" placeholder="Choose a date" required>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div class="clr-form-control clr-row">
+          <label for="treatment" class="clr-control-label clr-col-12 clr-col-md-4">
+            Choose a treament type:
+          </label>
+          <div class="clr-control-container clr-col-12 clr-col-md-6">
+              <div class="clr-select-wrapper">
+                <select  id="treatment" class="clr-select" formControlName="treatment" required>
+                      <option *ngFor="let treament of petsService.treatmentArray" value="{{treament}}"> {{treament}}</option>
+                  </select>
+              </div>
+          </div>
+        </div>
+        <div class="clr-form-control clr-row">
+          <label for="note" class="clr-control-label clr-col-12 clr-col-md-4">
+           Additional note:
+          </label>
+          <div class="clr-control-container clr-col-12 clr-col-md-6">
+              <div class="clr-textarea-wrapper">
+                <textarea   id="note" class="clr-textarea" formControlName="note">
+                  </textarea >
+              </div>
+          </div>
+        </div>
+    <br>
+    <button
+      type="submit"
+      class="btn btn-success-outline"
+      [disabled]="!bookingForm.valid"
+      >Save
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger-outline"
+      (click)="onCancel()"> Cancel</button>
+      </form>
+    </div>
+  </div>

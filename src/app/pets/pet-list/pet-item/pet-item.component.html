@@ -1,0 +1,27 @@
+<a [routerLink]="['../', index]"
+    routerLinkActive="active"
+    style="height: 300px; width: 200px;"
+    class="card clickable">
+  <div class="card-img">
+      <img [src]="pet.imagePath"
+            alt="{{ pet.name }}"
+            class="img-responsive"
+            style="height: 150px;">
+  </div>
+  <div class="card-block">
+      <p class="card-text">
+          Name: {{ pet.name}}
+      </p>
+      <p class="card-text">
+          Age: {{ pet.age}}
+      </p>
+      <p class="card-text">
+          Category:
+          <span class="label label-info">{{ pet.category}} animal</span>
+      </p>
+      <!-- <p class="card-text">
+          Description: {{ pet.description}}
+      </p> -->
+  </div>
+</a>
+

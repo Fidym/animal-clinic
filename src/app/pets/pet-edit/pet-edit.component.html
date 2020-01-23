@@ -1,0 +1,80 @@
+<div class="clr-row">
+  <div class="clr-col-sm-12">
+<form
+  clrForm
+  crlLayout="horizontal"
+  [formGroup]="petForm"
+  (ngSubmit)="onSubmit()"
+>
+  <clr-input-container>
+          <label> Name: </label>
+          <input clrInput type="text" formControlName="name" required />
+  </clr-input-container>
+  <clr-input-container>
+          <label> Age: </label>
+          <input clrInput type="number" formControlName="age" required />
+          <clr-control-helper> In years. </clr-control-helper>
+  </clr-input-container>
+  <clr-select-container>
+        <label> Category: </label>
+        <select clrSelect formControlName="category" required>
+            <option *ngFor="let category of petService.categoryArray" value="{{category}}">{{category}}</option>
+          </select>
+  </clr-select-container>
+  <clr-input-container>
+          <label> Image URL: </label>
+          <input clrInput #imagePath type="text" formControlName="imagePath" />
+  </clr-input-container>
+    <img [src]="imagePath.value" style="max-width: 400px" class="img-responsive">
+  <clr-textarea-container>
+        <label> Description: </label>
+        <input clrTextarea  type="text" formControlName="description" />
+  </clr-textarea-container>
+  <ng-container *ngIf="editMode"  formArrayName="treatments">
+    <h4> History of treatments:</h4>
+    <div class="clr-row"
+        *ngFor="let treatmentCtrl of getControls(); let i = index"
+        [formGroupName]="i"
+        style="margin-top: 8px">
+        <div class="clr-col-12 clr-col-md-4 clr-justify-content-*-start">
+          <clr-input-container>
+              <input clrInput type="text" formControlName="name"/>
+          </clr-input-container>
+        </div>
+        <div class="clr-col-12 clr-col-md-4">
+          <clr-date-container>
+              <input type="date" clrDate formControlName="date"/>
+          </clr-date-container>
+        </div>
+        <div class="clr-col-12 clr-col-md-2">
+          <button
+            type="button"
+            style="margin-top: 20px"
+            class="btn btn-danger btn-sm btn-icon"
+            (click)="onX(i)">
+            <clr-icon shape="times"></clr-icon>
+          </button>
+        </div>
+    </div>
+    <br>
+    <button class="btn btn-link"
+            type="button"
+            (click)="onAddTreatment()">
+              Add treatment
+    </button>
+  </ng-container>
+  <br>
+  <br>
+  <button
+    type="submit"
+    class="btn btn-success-outline"
+    [disabled]="!petForm.valid"
+    >Save
+  </button>
+  <button
+    type="button"
+    class="btn btn-danger-outline"
+    (click)="onCancel()"> Cancel</button>
+</form>
+  </div>
+</div>

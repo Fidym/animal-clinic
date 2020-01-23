@@ -1,0 +1,53 @@
+<div class="clr-row">
+  <div class="clr-col-sm-6">
+    <img [src]="pet.imagePath"
+                alt="{{ pet.name }}"
+                class="img-responsive"
+                style="height: 150px;">
+  </div>
+  <div class="clr-col-sm-6">
+    <h3> Name: {{ pet.name}}</h3>
+    <h3> Age: {{ pet.age}}</h3>
+    <h3> Category: <span class="label label-info">{{ pet.category}} animal</span> </h3>
+  </div>
+</div>
+<div class="clr-row">
+    <div class="clr-col-sm-12">
+      <h3>Description:</h3>
+      <p> {{ pet.description }} </p>
+    </div>
+</div>
+<div class="clr-row">
+    <div class="clr-col-sm-12">
+      <h3>Treatments:</h3>
+      <br>
+      <ul class="list-group">
+        <button
+          (click)="onNewTreatment()"
+          class="btn btn-primary btn-block">
+          look new for a treatment
+        </button>
+        <li class="list-group-item"
+              *ngFor="let treatment of pet.treatments">
+              {{ treatment.name }} | {{ treatment.date}}
+        </li>
+      </ul>
+    </div>
+</div>
+<br>
+<div class="clr-row">
+  <div class="clr-col-sm-12">
+      <button
+      type="submit"
+      class="btn btn-primary-outline"
+      (click)="onEdit()"
+      > Edit
+      </button>
+      <button
+      type="button"
+      class="btn btn-danger-outline"
+      (click)="onDelete()"
+      > Delete </button>
+  </div>
+</div>
+

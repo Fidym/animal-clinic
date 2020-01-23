@@ -1,0 +1,22 @@
+<div class="clr-row clr-justify-content-center">
+  <div class="clr-col clr-col-12 clr-col-md-6">
+    <form clrForm (ngSubmit)=" onMakeAdmin(f)" #f="ngForm">
+      <clr-input-container>
+        <label> Email: </label>
+        <input
+              type="email"
+              name="email"
+              clrInput
+              ngModel
+              required
+              placeholder="User email"
+              >
+        <clr-control-error> This field is required! </clr-control-error>
+      </clr-input-container>
+      <br>
+      <button class="btn btn-primary" type="submit" [disabled]="!f.valid"> Make admin </button>
+    </form>
+  </div>
+</div>
+
+

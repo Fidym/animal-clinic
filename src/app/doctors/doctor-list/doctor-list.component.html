@@ -1,0 +1,39 @@
+
+
+ <div *ngIf="isLoading">
+  <span class="spinner spinner-inline">
+      Loading...
+  </span>
+  <span>
+      Loading...
+  </span>
+</div>
+<div *ngIf="!isLoading">
+  <div class="clr-row  clr-align-items-center">
+      <ng-container *ngFor="let doctor of doctors, let i = index">
+      <div class="clr-col-12
+                  clr-col-sm-6
+                  clr-col-lg-6">
+        <app-doctor-item
+        [doctor]="doctor"
+        [index]="i"
+        >
+      </app-doctor-item>
+    </div>
+    </ng-container>
+    <div class="clr-col-12
+                clr-col-sm-6
+                clr-col-lg-6">
+      <button
+        *ngIf="authService.isAdmin"
+        class="btn btn-icon btn-success"
+        title="Add New"
+        style="height: 50px;
+        width: 50px"
+        (click)="onNewdoctor()"
+        >
+        <clr-icon shape="plus"></clr-icon>
+      </button>
+    </div>
+  </div>
+</div>

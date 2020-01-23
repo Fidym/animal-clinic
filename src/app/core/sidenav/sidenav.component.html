@@ -1,0 +1,64 @@
+<nav class="sidenav"
+      [clr-nav-level]="2"
+      *ngIf="authService.isAuthenticated() && isPetRoute(url)">
+  <section class="sidenav-content">
+      <a routerLink='./my-pets/view' class="nav-link" routerLinkActive="active">
+          View my pets
+      </a>
+      <a routerLink='./my-pets/add-pet' class="nav-link" routerLinkActive="active">
+          Add new pet
+      </a>
+      <section class="nav-group">
+          <input id="edit" type="checkbox">
+          <label for="edit"> Edit pets</label>
+          <ul *ngFor="let pet of pets, let i = index" class="nav-list">
+             <div *ngIf="userId == pet.userId || authService.isAdmin">
+              <li>
+                  <a class="nav-link"
+                  routerLink='./my-pets/{{i}}/edit'
+                  routerLinkActive="active"
+                  > {{pet.name}}
+                  </a>
+              </li>
+            </div>
+          </ul>
+      </section>
+  </section>
+</nav>
+<nav class="sidenav"
+      [clr-nav-level]="2"
+      *ngIf="authService.isAdmin && authService.isAuthenticated() && isDoctorRoute(url)">
+  <section class="sidenav-content">
+    <a routerLink='./doctors/view' class="nav-link" routerLinkActive="active">
+      View doctors
+    </a>
+    <a routerLink='./doctors/add-doctor' class="nav-link" routerLinkActive="active">
+      Add new doctor
+    </a>
+    <section class="nav-group">
+      <input id="edit" type="checkbox">
+      <label for="edit"> Edit doctors</label>
+      <ul *ngFor="let  doctor of doctors, let i = index" class="nav-list">
+          <li><a class="nav-link"
+              routerLink='./doctors/{{i}}/edit'
+              routerLinkActive="active"
+              > {{doctor.name}}
+              </a>
+          </li>
+      </ul>
+    </section>
+  </section>
+</nav>
+<nav class="sidenav"
+      [clr-nav-level]="2"
+      *ngIf="authService.isAdmin && authService.isAuthenticated() && isBookingRoute(url)">
+  <section class="sidenav-content">
+    <a routerLink='./booking/new' class="nav-link" routerLinkActive="active">
+      Add new
+    </a>
+    <a routerLink='./booking/table' class="nav-link" routerLinkActive="active">
+      View Appointments
+    </a>
+  </section>
+</nav>
+

@@ -1,0 +1,31 @@
+<div *ngIf="isLoading">
+  <span class="spinner spinner-inline">
+      Loading...
+  </span>
+  <span>
+      Loading...
+  </span>
+</div>
+<div *ngIf="!isLoading">
+  <div *ngFor="let doctor of doctors">
+    <h3> {{doctor.name}}</h3>
+      <table class="table table-compact">
+          <thead>
+              <tr>
+                  <th class="left"> Date</th>
+                  <th >Treatment </th>
+                  <th> Pet Name</th>
+                  <th  class="left"> Note</th>
+              </tr>
+          </thead>
+          <tbody *ngFor="let appointment of appointments">
+              <tr *ngIf="doctor.name === appointment.doctorName">
+                  <td class="left"> {{appointment.date | date }}</td>
+                  <td>{{ appointment.name }}</td>
+                  <td> {{ appointment.petName}}</td>
+                  <td class="left"> {{ appointment.note }}</td>
+              </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
