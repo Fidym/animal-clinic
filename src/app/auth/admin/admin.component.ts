@@ -14,7 +14,6 @@ export class AdminComponent implements OnInit {
   ngOnInit() {
   }
 
-
   onMakeAdmin(form: NgForm) {
     const email = form.value.email;
     this.authService.addAdminRole(email);

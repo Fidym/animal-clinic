@@ -31,7 +31,7 @@ export class NewBookingComponent implements OnInit, OnDestroy {
   bookedAppointments: Appointment[] = [];
   subscriptionAppiointments: Subscription;
 
-  constructor(private petsService: PetsService,
+  constructor(public petsService: PetsService,
               private doctorService: DoctorService,
               private dataService: DataStorageService,
               private authService: AuthService,
@@ -40,7 +40,7 @@ export class NewBookingComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.dataService.getPets();
+    this.dataService.getPets().subscribe();
     this.dataService.getDoctors();
     this.dataService.getAppointments();
 
@@ -48,7 +48,7 @@ export class NewBookingComponent implements OnInit, OnDestroy {
     this.subscriptionPet = this.petsService.petsChanged.subscribe(
       (pets: Pet[]) => {
         for (const pet of pets) {
-          if (pet.userId === this.userId || this.authService.isAdmin) {
+          if (pet.userId === this.userId || this.authService.isAdmin || pet.userId === 'master') {
             this.pets.push(pet);
           }
         }
@@ -155,8 +155,8 @@ export class NewBookingComponent implements OnInit, OnDestroy {
 
     this.petsService.addTreatment(this.pet, newTreatment);
     this.dataService.storePets().subscribe(
-      (response: HttpEvent<Object>) => {
-        return console.log(response);
+      (response: Pet[]) => {
+        console.log(response);
       }
     );
 
@@ -171,7 +171,11 @@ export class NewBookingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-   this.subscriptionPet.unsubscribe();
-   this.subscriptionAppiointments.unsubscribe();
+    if (this.subscriptionPet) {
+      this.subscriptionPet.unsubscribe();
+    }
+    if (this.subscriptionAppiointments) {
+      this.subscriptionAppiointments.unsubscribe();
+    }
   }
 }

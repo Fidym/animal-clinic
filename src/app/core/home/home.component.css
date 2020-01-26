@@ -1,11 +1,18 @@
 
 .title {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-top: 50px;
 }
 
 .title p{
   font-size: larger;
   font-weight: bold;
+}
+
+img {
+  height: 30%;
+  width: 30%;
 }

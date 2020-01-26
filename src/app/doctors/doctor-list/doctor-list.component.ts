@@ -22,7 +22,7 @@ export class DoctorListComponent implements OnInit, OnDestroy {
               private router: Router,
               private route: ActivatedRoute,
               private dataStore: DataStorageService,
-              private authService: AuthService,
+              public authService: AuthService,
               ) { }
 
   ngOnInit() {

@@ -29,16 +29,23 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.authenticated) {
+    // if (this.authService.authenticated) {
+    //   return true;
+    // }
+    if (!this.authService.authenticated) {
+      return this.authService.autoLogin();
+    } else if (this.authService.authenticated) {
       return true;
+    } else {
+      return false;
     }
 
     // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
+    // this.authService.redirectUrl = url;
 
     // Navigate to the login page with extras
-    this.router.navigate(['/sign-in']);
-    return false;
+    // this.router.navigate(['/sign-in']);
+    // return false;
   }
 
 }

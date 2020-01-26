@@ -11,7 +11,6 @@ import { AuthGuard } from './auth/auth.guard';
 import { NewBookingComponent } from './booking/new-booking/new-booking.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'sign-up', component: SignupComponent },
   { path: 'sign-in', component: SigninComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
@@ -23,7 +22,8 @@ const routes: Routes = [
       { path: 'new', component: NewBookingComponent },
       { path: 'table', component: BookingTableComponent, canActivate: [AdminGuard] },
     ]
-   }
+  },
+  { path: '', pathMatch: 'full', component: HomeComponent },
 ];
 
 @NgModule({

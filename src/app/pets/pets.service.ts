@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { take, switchMap, tap } from 'rxjs/operators';
 import { Pet } from './pet.model';
 import { Treatment } from '../shared/treatment.model';
 
@@ -79,8 +80,8 @@ export class PetsService {
   addPet(pet: Pet) {
     this.pets.push(pet);
     this.petsChanged.next(this.pets.slice());
-    console.log(this.pets);
   }
+
 
   deletePet(index: number) {
     this.pets.splice(index, 1);

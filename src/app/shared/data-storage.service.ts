@@ -13,90 +13,117 @@ import { Appointment } from '../booking/appointment.model';
   providedIn: 'root'
 })
 export class DataStorageService {
-
-
-  constructor(private authService: AuthService,
-              private http: HttpClient,
-              private petService: PetsService,
-              private doctorService: DoctorService,
-              private bookingService: BookingService) { }
+  constructor(
+    private authService: AuthService,
+    private http: HttpClient,
+    private petService: PetsService,
+    private doctorService: DoctorService,
+    private bookingService: BookingService
+  ) {}
 
   storePets() {
     const token = this.authService.getToken();
     const url = 'https://animal-clinic-b523e.firebaseio.com/pets.json';
-    return this.http.put(url,
-                          this.petService.getPets(),
-                          {
-                          observe: 'body',
-                          params: new HttpParams().set('auth', token)}
-                          );
+    return this.http
+      .put<Pet[]>(url, this.petService.getPets(), {
+        observe: 'body',
+        params: new HttpParams().set('auth', token)
+      })
+      .pipe(
+        map(pets => {
+          this.petService.setPets(pets);
+          return pets;
+        })
+      );
   }
 
+  // getPets() {
+  //   const token = this.authService.getToken();
+  //   this.http
+  //     .get<Pet[]>(
+  //       'https://animal-clinic-b523e.firebaseio.com/pets.json?auth=' + token
+  //     )
+  //     .pipe(
+  //       map(pets => {
+  //         console.log("getPets: " + pets.length);
+  //         for (const pet of pets) {
+  //           if (!pet.treatments) {
+  //             pet.treatments = [];
+  //           }
+  //         }
+  //         return pets;
+  //       })
+  //     )
+  //     .subscribe((pets: Pet[]) => this.petService.setPets(pets));
+  // }
+
   getPets() {
-    const token = this.authService.getToken();
-    this.http.get<Pet[]>('https://animal-clinic-b523e.firebaseio.com/pets.json?auth=' + token )
-      .pipe(map(
-        (pets) => {
-          console.log(pets);
-          for (const pet of pets) {
-            if (!pet.treatments) {
-              pet.treatments = [];
+    if (this.authService.getToken()) {
+      const token = this.authService.getToken();
+      return this.http
+        .get<Pet[]>(
+          'https://animal-clinic-b523e.firebaseio.com/pets.json?auth=' + token
+        )
+        .pipe(
+          map(pets => {
+            console.log('Data-storage: getPets().lenght = ' + pets.length);
+            for (const pet of pets) {
+              if (!pet.treatments) {
+                pet.treatments = [];
+              }
             }
-          }
-          return pets;
-        }
-      ))
-      .subscribe((pets: Pet[]) =>
-        this.petService.setPets(pets));
+            this.petService.setPets(pets);
+            return pets;
+          })
+        );
+    }
   }
 
   storeDoctors() {
     const token = this.authService.getToken();
     const url = 'https://animal-clinic-b523e.firebaseio.com/doctors.json';
-    return this.http.put(url,
-                          this.doctorService.getDoctors(),
-                          {
-                          observe: 'body',
-                          params: new HttpParams().set('auth', token)}
-                          );
+    return this.http.put(url, this.doctorService.getDoctors(), {
+      observe: 'body',
+      params: new HttpParams().set('auth', token)
+    });
   }
 
   getDoctors() {
-    this.http.get<Doctor[]>('https://animal-clinic-b523e.firebaseio.com/doctors.json')
-      .pipe(map(
-        (doctors) => {
+    this.http
+      .get<Doctor[]>('https://animal-clinic-b523e.firebaseio.com/doctors.json')
+      .pipe(
+        map(doctors => {
           console.log(doctors);
           return doctors;
-        }
-      ))
-      .subscribe((doctors: Doctor[]) =>
-        this.doctorService.setDoctors(doctors)
-        );
+        })
+      )
+      .subscribe((doctors: Doctor[]) => this.doctorService.setDoctors(doctors));
   }
 
   getAppointments() {
     const token = this.authService.getToken();
-    this.http.get<Appointment[]>('https://animal-clinic-b523e.firebaseio.com/appointments.json?auth=' + token )
-      .pipe(map(
-        (appointments) => {
+    this.http
+      .get<Appointment[]>(
+        'https://animal-clinic-b523e.firebaseio.com/appointments.json?auth=' +
+          token
+      )
+      .pipe(
+        map(appointments => {
           console.log(appointments);
           return appointments;
-        }
-      ))
+        })
+      )
       .subscribe((appointments: Appointment[]) =>
-        this.bookingService.setAppointments(appointments));
+        this.bookingService.setAppointments(appointments)
+      );
   }
 
   storeAppointments() {
     const token = this.authService.getToken();
     const url = 'https://animal-clinic-b523e.firebaseio.com/appointments.json';
-    return this.http.put(url,
-                          this.bookingService.getAppointments(),
-                          {
-                          observe: 'body',
-                          params: new HttpParams().set('auth', token)}
-                          );
+    return this.http.put(url, this.bookingService.getAppointments(), {
+      observe: 'body',
+      params: new HttpParams().set('auth', token)
+    });
   }
-
 }
-

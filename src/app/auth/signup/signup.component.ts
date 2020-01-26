@@ -21,7 +21,7 @@ export class SignupComponent implements OnInit {
 
   signUpForm: FormGroup;
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private fb: FormBuilder) {
                 this.signUpForm = this.fb.group({
                   email: ['', [

@@ -1,3 +1,4 @@
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ClarityModule } from '@clr/angular';
 import { AppRoutingModule } from './../app-routing.module';
@@ -18,6 +19,7 @@ import { AuthComponent } from './auth.component';
   imports: [
     CommonModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     AppRoutingModule,
     ClarityModule,

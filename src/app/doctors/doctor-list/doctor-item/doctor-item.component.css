@@ -1,0 +1,14 @@
+.card{
+  height: 300px;
+}
+.card-header{
+  height: 20%;
+}
+
+.card-block{
+  height: 60%;
+}
+
+.card-footer{
+  height: 20%;
+}

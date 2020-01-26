@@ -1,54 +1,65 @@
-<clr-header>
+<clr-header class="header-5">
   <div class="branding">
-      <a [routerLink]="['/']" class="nav-link">
-        <div class="clr-icon"><i class="fas fa-paw fa-3x"></i></div>
+    <a [routerLink]="['/']" class="nav-link">
+      <div class="icon clr-icon"><i class="fas fa-paw fa-3x"></i></div>
 
-        <span class="title">Animal Clinic</span>
-      </a>
-    </div>
-    <div class="header-nav" [clr-nav-level]="1">
-            <a
-              class="nav-link nav-text"
-              [routerLink]="['/my-pets/view']"
-              routerLinkActive="active">My Pets</a>
-            <a class="nav-link nav-text"
-            [routerLink]="['/doctors/view']"
-            routerLinkActive="active"> Clinic Team </a>
-            <a class="nav-link nav-text"
-            [routerLink]="['/booking/new']"
-            routerLinkActive="active"> Appointment Booking</a>
-    </div>
-    <div class="header-actions">
-      <ng-template [ngIf]="authService.isAdmin && userLoggedIn">
-        <a
-          [routerLink]="['/admin']"
-          routerLinkActive="active"
-          class="nav-link nav-text"
-          > Admin
-        </a>
-    </ng-template>
-      <ng-template  [ngIf]="!userLoggedIn">
-        <a
-          [routerLink]="['/sign-up']"
-          routerLinkActive="active"
-          class="nav-link nav-text"
-          >Register
-        </a>
-        <a
-          [routerLink]="['/sign-in']"
-          routerLinkActive="active"
-          class="nav-link nav-text"
-          >Log in
-        </a>
-      </ng-template>
+      <span class="title">Animal Clinic</span>
+    </a>
+  </div>
+  <div class="header-nav" [clr-nav-level]="1">
+    <a
+      class="nav-link nav-text"
+      [routerLink]="['/my-pets/view']"
+      routerLinkActive="active"
+      >My Pets</a
+    >
+    <a
+      class="nav-link nav-text"
+      [routerLink]="['/doctors/view']"
+      routerLinkActive="active"
+    >
+      Clinic Team
+    </a>
+    <a
+      class="nav-link nav-text"
+      [routerLink]="['/booking/new']"
+      routerLinkActive="active"
+    >
+      Appointment Booking</a
+    >
+  </div>
+  <div class="header-actions">
+    <ng-template [ngIf]="authService.isAdmin && userLoggedIn">
       <a
-        [routerLink]="['/']"
+        [routerLink]="['/admin']"
         routerLinkActive="active"
         class="nav-link nav-text"
-        (click)="onLogOut()"
-        *ngIf="userLoggedIn">
-        Log out
+      >
+        Admin
       </a>
-    </div>
+    </ng-template>
+    <ng-template [ngIf]="!userLoggedIn">
+      <a
+        [routerLink]="['/sign-up']"
+        routerLinkActive="active"
+        class="nav-link nav-text"
+        >Register
+      </a>
+      <a
+        [routerLink]="['/sign-in']"
+        routerLinkActive="active"
+        class="nav-link nav-text"
+        >Log in
+      </a>
+    </ng-template>
+    <a
+      [routerLink]="['/']"
+      routerLinkActive="active"
+      class="nav-link nav-text"
+      (click)="onLogOut()"
+      *ngIf="userLoggedIn"
+    >
+      Log out
+    </a>
+  </div>
 </clr-header>
-

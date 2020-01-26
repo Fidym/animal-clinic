@@ -10,9 +10,9 @@
       </a>
       <section class="nav-group">
           <input id="edit" type="checkbox">
-          <label for="edit"> Edit pets</label>
+          <label for="edit"> Edit pets: </label>
           <ul *ngFor="let pet of pets, let i = index" class="nav-list">
-             <div *ngIf="userId == pet.userId || authService.isAdmin">
+             <div *ngIf="userId == pet.userId || authService.isAdmin || pet.userId === 'master'">
               <li>
                   <a class="nav-link"
                   routerLink='./my-pets/{{i}}/edit'

@@ -24,4 +24,8 @@ export class DoctorItemComponent implements OnInit {
     this.router.navigate(['../', this.index], {relativeTo: this.route});
   }
 
+  onBookAppointment() {
+    this.router.navigate(['/booking/new']);
+  }
+
 }

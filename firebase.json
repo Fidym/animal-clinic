@@ -5,5 +5,19 @@
       "npm --prefix \"$RESOURCE_DIR\" run build"
     ],
     "source": "functions"
+  },
+  "hosting": {
+    "public": "dist/clinic-app",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }

@@ -36,14 +36,14 @@ export class PetDetailsComponent implements OnInit {
   }
 
   onNewTreatment() {
-    this.router.navigate(['/booking']);
+    this.router.navigate(['/booking/new']);
   }
 
   onDelete() {
     this.petsService.deletePet(this.id);
     this.dataService.storePets().subscribe(
-      (response: HttpEvent<Object>) => {
-        return console.log(response);
+      (response: Pet[]) => {
+        console.log(response);
     });
     this.router.navigate(['my-pets/view']);
   }

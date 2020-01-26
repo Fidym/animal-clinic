@@ -19,7 +19,7 @@ export class PetEditComponent implements OnInit {
   editMode = false;
 
   constructor(private route: ActivatedRoute,
-              private petService: PetsService,
+              public petService: PetsService,
               private router: Router,
               private dataService: DataStorageService,
               private authService: AuthService) { }
@@ -98,13 +98,13 @@ export class PetEditComponent implements OnInit {
       this.petService.addPet(newPet);
     }
     this.dataService.storePets().subscribe(
-      (response: HttpEvent<Object>) => {
-        return console.log(response);
+      (response: Pet[]) => {
+        console.log(response);
+        this.petForm.reset();
+        this.editMode = false;
+        this.router.navigate(['./my-pets/view']);
       }
     );
-    this.petForm.reset();
-    this.editMode = false;
-    this.router.navigate(['./my-pets/view']);
   }
 
   onCancel() {

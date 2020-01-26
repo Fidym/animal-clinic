@@ -47,7 +47,7 @@
       type="button"
       class="btn btn-danger-outline"
       (click)="onDelete()"
+      [disabled]="pet.userId === 'master'"
       > Delete </button>
   </div>
 </div>
-

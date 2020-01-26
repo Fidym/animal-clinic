@@ -16,7 +16,7 @@ export class DoctorDetailsComponent implements OnInit {
   @Input() index: number;
 
   constructor(private doctorService: DoctorService,
-              private authService: AuthService,
+              public authService: AuthService,
               private route: ActivatedRoute,
               private router: Router) { }
 

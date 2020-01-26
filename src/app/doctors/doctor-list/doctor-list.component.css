@@ -1,0 +1,7 @@
+.loadingScreen {
+  height: max-content;
+  min-height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

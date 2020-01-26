@@ -1,4 +1,3 @@
-
 import { Injectable, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
@@ -8,7 +7,6 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService implements OnInit {
-
   token: string;
   isAdmin = false;
 
@@ -21,11 +19,40 @@ export class AuthService implements OnInit {
   isLoading = false;
   redirectUrl: string;
 
-  constructor(private router: Router) {
-  }
+  constructor(private router: Router) {}
 
   ngOnInit() {
-    this.authState();
+    // this.authState();
+  }
+
+  // AUTO LOGIN
+  storeString(key: string, value: string) {
+    localStorage.setItem(key, value);
+  }
+
+  hasKey(key: string) {
+    return !!localStorage.getItem(key);
+  }
+
+  getString(key: string) {
+    return localStorage.getItem(key);
+  }
+
+  remove(key: string) {
+    localStorage.removeItem(key);
+  }
+
+  autoLogin() {
+    console.log('Auto-login triggered');
+    if (!this.hasKey('userData')) {
+      this.router.navigate(['/sign-in']);
+      return false;
+    }
+    const loadedUser = JSON.parse(this.getString('userData'));
+    if (!this.user) {
+      this.signInUser(loadedUser.email, loadedUser.password);
+      return true;
+    }
   }
 
   addAdminRole(adminEmail: any) {
@@ -44,7 +71,7 @@ export class AuthService implements OnInit {
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
         this.isLoading = false;
-        this.router.navigate(['/']);
+        this.signInUser(email, password);
       })
       .catch(error => {
         this.isLoading = false;
@@ -55,14 +82,14 @@ export class AuthService implements OnInit {
 
   signInUser(email: string, password: string) {
     this.isLoading = true;
+    const logInData = {email, password};
+    this.storeString('userData', JSON.stringify(logInData));
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         this.isLoading = false;
-        this.getToken();
-        this.authenticated = true;
-        this.userLoggedIn.next(this.authenticated);
+        this.authState();
         this.router.navigate(['/']);
       })
       .catch(error => {
@@ -92,8 +119,16 @@ export class AuthService implements OnInit {
   }
 
   logout() {
-    firebase.auth().signOut();
-    this.token = null;
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        this.remove('userData');
+        this.authState();
+      })
+      .catch(error => {
+        console.log('Log out error: ' + error);
+      });
   }
 
   authState() {
@@ -108,13 +143,12 @@ export class AuthService implements OnInit {
         this.userLoggedIn.next(this.authenticated);
         this.user = user;
         this.userId.next(user.uid);
-        console.log('user logged in: ', this.user.email);
       } else {
         this.isAdmin = false;
         this.authenticated = false;
         this.userLoggedIn.next(this.authenticated);
         this.user = null;
-        this.userId.next(user.uid);
+        this.userId.next(null);
         console.log('user logged out');
       }
     });
