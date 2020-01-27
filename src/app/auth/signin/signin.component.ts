@@ -27,6 +27,7 @@ export class SigninComponent implements OnInit {
 
     // Redirect the user
     this.router.navigateByUrl(this.authService.redirectUrl);
+    this.authService.redirectUrl = null;
   }
 
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { take, switchMap, tap } from 'rxjs/operators';
 import { Pet } from './pet.model';
 import { Treatment } from '../shared/treatment.model';
 
@@ -34,31 +33,31 @@ export class PetsService {
 
 
   public pets: Pet[] = [
-    new Pet(
-      'Sanyi',
-      'https://i.ytimg.com/vi/bDmghY9Kbt4/hqdefault.jpg',
-      'small',
-      12,
-      'Has very nice eyes.',
-      [
-        new Treatment('Microchipping', '2019-01-01'),
-        new Treatment('Parasite prevention and detecion', '2019-01-02'),
-        new Treatment('Annual vaccine', '2019-01-03'),
-      ],
-      'master',
-    ),
-    new Pet(
-      'Drogon',
-      'https://vignette.wikia.nocookie.net/gameofthrones/images/8/8f/DrogonWinterfell8x01.PNG/revision/latest?cb=20190515233534',
-      'exotic',
-      7,
-      'Eats two cows a day.',
-      [
-        new Treatment('Wellness center', '2019-01-01'),
-        new Treatment('Clinic service', '2019-01-02'),
-      ],
-      'master',
-    )
+    // new Pet(
+    //   'Sanyi',
+    //   'https://i.ytimg.com/vi/bDmghY9Kbt4/hqdefault.jpg',
+    //   'small',
+    //   12,
+    //   'Has very nice eyes.',
+    //   [
+    //     new Treatment('Microchipping', '2019-01-01'),
+    //     new Treatment('Parasite prevention and detecion', '2019-01-02'),
+    //     new Treatment('Annual vaccine', '2019-01-03'),
+    //   ],
+    //   'master',
+    // ),
+    // new Pet(
+    //   'Drogon',
+    //   'https://vignette.wikia.nocookie.net/gameofthrones/images/8/8f/DrogonWinterfell8x01.PNG/revision/latest?cb=20190515233534',
+    //   'exotic',
+    //   7,
+    //   'Eats two cows a day.',
+    //   [
+    //     new Treatment('Wellness center', '2019-01-01'),
+    //     new Treatment('Clinic service', '2019-01-02'),
+    //   ],
+    //   'master',
+    // )
   ];
 
   setPets(pets: Pet[]) {

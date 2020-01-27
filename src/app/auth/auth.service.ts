@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable, OnInit, NgZone } from '@angular/core';
 import * as firebase from 'firebase';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -19,40 +19,10 @@ export class AuthService implements OnInit {
   isLoading = false;
   redirectUrl: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private _ngZone: NgZone) {}
 
   ngOnInit() {
-    // this.authState();
-  }
-
-  // AUTO LOGIN
-  storeString(key: string, value: string) {
-    localStorage.setItem(key, value);
-  }
-
-  hasKey(key: string) {
-    return !!localStorage.getItem(key);
-  }
-
-  getString(key: string) {
-    return localStorage.getItem(key);
-  }
-
-  remove(key: string) {
-    localStorage.removeItem(key);
-  }
-
-  autoLogin() {
-    console.log('Auto-login triggered');
-    if (!this.hasKey('userData')) {
-      this.router.navigate(['/sign-in']);
-      return false;
-    }
-    const loadedUser = JSON.parse(this.getString('userData'));
-    if (!this.user) {
-      this.signInUser(loadedUser.email, loadedUser.password);
-      return true;
-    }
   }
 
   addAdminRole(adminEmail: any) {
@@ -82,8 +52,6 @@ export class AuthService implements OnInit {
 
   signInUser(email: string, password: string) {
     this.isLoading = true;
-    const logInData = {email, password};
-    this.storeString('userData', JSON.stringify(logInData));
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
@@ -122,10 +90,6 @@ export class AuthService implements OnInit {
     firebase
       .auth()
       .signOut()
-      .then(() => {
-        this.remove('userData');
-        this.authState();
-      })
       .catch(error => {
         console.log('Log out error: ' + error);
       });
@@ -143,12 +107,18 @@ export class AuthService implements OnInit {
         this.userLoggedIn.next(this.authenticated);
         this.user = user;
         this.userId.next(user.uid);
+        if (this.redirectUrl) {
+          this._ngZone.run(() => {this.router.navigateByUrl(this.redirectUrl); });
+          this.redirectUrl = null;
+        }
+        console.log('user logged in');
       } else {
         this.isAdmin = false;
         this.authenticated = false;
         this.userLoggedIn.next(this.authenticated);
         this.user = null;
         this.userId.next(null);
+        this.router.navigate(['/sign-in']);
         console.log('user logged out');
       }
     });

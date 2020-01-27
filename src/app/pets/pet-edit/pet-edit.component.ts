@@ -1,10 +1,10 @@
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { PetsService } from '../pets.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
-import { HttpEvent } from '@angular/common/http';
 import { Pet } from '../pet.model';
 
 @Component({
@@ -17,6 +17,8 @@ export class PetEditComponent implements OnInit {
   petForm: FormGroup;
   id: number;
   editMode = false;
+  isLoading = false;
+  subscriptionData : Subscription;
 
   constructor(private route: ActivatedRoute,
               public petService: PetsService,
@@ -25,14 +27,18 @@ export class PetEditComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-        this.editMode = params['id'] != null;
-        this.initForm();
-        console.log('Edit mode:' + this.editMode);
-      }
-    );
+    this.isLoading = true;
+    this.subscriptionData = this.dataService.getPets().subscribe(() => {
+      this.route.params.subscribe(
+        (params: Params) => {
+          this.id = +params['id'];
+          this.editMode = params['id'] != null;
+          this.initForm();
+          this.isLoading = false;
+          // console.log('Edit mode:' + this.editMode);
+        }
+      );
+    });
   }
 
   private format(inputDate) {

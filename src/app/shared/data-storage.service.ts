@@ -37,26 +37,6 @@ export class DataStorageService {
       );
   }
 
-  // getPets() {
-  //   const token = this.authService.getToken();
-  //   this.http
-  //     .get<Pet[]>(
-  //       'https://animal-clinic-b523e.firebaseio.com/pets.json?auth=' + token
-  //     )
-  //     .pipe(
-  //       map(pets => {
-  //         console.log("getPets: " + pets.length);
-  //         for (const pet of pets) {
-  //           if (!pet.treatments) {
-  //             pet.treatments = [];
-  //           }
-  //         }
-  //         return pets;
-  //       })
-  //     )
-  //     .subscribe((pets: Pet[]) => this.petService.setPets(pets));
-  // }
-
   getPets() {
     if (this.authService.getToken()) {
       const token = this.authService.getToken();
@@ -66,7 +46,6 @@ export class DataStorageService {
         )
         .pipe(
           map(pets => {
-            console.log('Data-storage: getPets().lenght = ' + pets.length);
             for (const pet of pets) {
               if (!pet.treatments) {
                 pet.treatments = [];
@@ -93,7 +72,7 @@ export class DataStorageService {
       .get<Doctor[]>('https://animal-clinic-b523e.firebaseio.com/doctors.json')
       .pipe(
         map(doctors => {
-          console.log(doctors);
+          // console.log(doctors);
           return doctors;
         })
       )
@@ -109,7 +88,7 @@ export class DataStorageService {
       )
       .pipe(
         map(appointments => {
-          console.log(appointments);
+          // console.log(appointments);
           return appointments;
         })
       )

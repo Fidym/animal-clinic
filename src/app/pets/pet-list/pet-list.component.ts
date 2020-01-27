@@ -1,15 +1,15 @@
-import { AuthService } from "./../../auth/auth.service";
-import { Pet } from "./../pet.model";
-import { PetsService } from "./../pets.service";
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subscription } from "rxjs";
-import { ActivatedRoute, Router } from "@angular/router";
-import { DataStorageService } from "src/app/shared/data-storage.service";
+import { AuthService } from './../../auth/auth.service';
+import { Pet } from './../pet.model';
+import { PetsService } from './../pets.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 @Component({
-  selector: "app-pet-list",
-  templateUrl: "./pet-list.component.html",
-  styleUrls: ["./pet-list.component.css"]
+  selector: 'app-pet-list',
+  templateUrl: './pet-list.component.html',
+  styleUrls: ['./pet-list.component.css']
 })
 export class PetListComponent implements OnInit, OnDestroy {
   pets: Pet[];
@@ -24,10 +24,14 @@ export class PetListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public authService: AuthService,
     private dataStore: DataStorageService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
-    console.log("Pet-list initialized");
+    this.pageInit();
+  }
+
+  private pageInit() {
     if (this.authService.authenticated) {
       this.isLoading = true;
       this.subscriptionData = this.dataStore.getPets().subscribe();
@@ -51,7 +55,7 @@ export class PetListComponent implements OnInit, OnDestroy {
   // }
 
   onNewPet() {
-    this.router.navigate(["../add-pet"], { relativeTo: this.route });
+    this.router.navigate(['../add-pet'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {
